@@ -1,22 +1,22 @@
 export default [
   {
-    title: 'Радионяня Motorola MBP16',
-    price: 3690,
-    image: 'img/radio.jpg',
+    title: 'LEGO Classic 484 детали',
+    price: 563,
+    image: 'img/lego.jpg',
   },
   {
-    title: 'Ультразвуковая зубная щётка Playbrush Smart Sonic',
-    price: 1690,
-    image: 'img/toothbrush.jpg',
+    title: 'Машинка-трансформер Screechers',
+    price: 209,
+    image: 'img/car.jpg',
   },
   {
-    title: 'Смартфон Xiaomi Mi Mix 3 6/128GB',
-    price: 21690,
+    title: 'Apple iPhone 11',
+    price: 15690,
     image: 'img/phone.jpg',
   },
   {
-    title: 'Электроскейт Razor Cruiser',
-    price: 24690,
+    title: 'LG F2V3GS6W',
+    price: 8490,
     image: 'img/board.jpg',
   },
   {

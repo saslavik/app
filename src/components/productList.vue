@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import products from '../App'
 
 export default {
   name: 'productList',

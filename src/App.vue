@@ -1,7 +1,7 @@
 <template>
   <section class="catalog">
-    <productList :products="products()" />
-    <base-pagination />
+    <productList :products="products()"/>
+    <base-pagination  v-model='page' :productPerPage='productPerPage' :maxPages='maxPages()'/>
   </section>
 </template>
 
@@ -26,6 +26,9 @@ export default {
     products() {
       const offset = (this.page - 1) * this.productPerPage;
       return products.slice(offset, offset + this.productPerPage);
+    },
+    maxPages() {
+      return products.length / this.productPerPage;
     },
   },
 };

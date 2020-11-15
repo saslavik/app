@@ -1,6 +1,6 @@
 <template>
   <section class="catalog">
-    <productList :products="products()"/>
+    <product-list :products="products()"/>
     <base-pagination  v-model='page' :productPerPage='productPerPage' :maxPages='maxPages()'/>
   </section>
 </template>

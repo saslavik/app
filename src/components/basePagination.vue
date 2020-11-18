@@ -38,12 +38,11 @@
 
 <script>
 export default {
-  name: 'basePagination',
   model: {
     prop: 'page',
     event: 'paginate',
   },
-  props: ['page', 'productPerPage', 'maxPages'],
+  props: ['page', 'productPerPage', 'countProducts'],
   methods: {
     changePage(page) {
       this.$emit('paginate', page);
@@ -53,6 +52,11 @@ export default {
     },
     nextPage(page) {
       if (page < this.maxPages) this.$emit('paginate', page + 1);
+    },
+  },
+  computed: {
+    maxPages() {
+      return this.countProducts / this.productPerPage;
     },
   },
 };

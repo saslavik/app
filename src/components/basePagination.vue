@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     maxPages() {
-      return this.countProducts / this.productPerPage;
+      return Math.ceil(this.countProducts / this.productPerPage);
     },
   },
 };

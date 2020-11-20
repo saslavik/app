@@ -44,7 +44,6 @@
                 type="radio"
                 name="color"
                 value="#73B6EA"
-                checked=""
               />
               <span
                 class="colors__value"
@@ -236,6 +235,7 @@
 
 <script>
 import categories from '../data/categories';
+import color from '../data/color';
 
 export default {
   data() {
@@ -250,6 +250,7 @@ export default {
     categories() {
       return categories;
     },
+
   },
   watch: {
     priceFrom(value) {

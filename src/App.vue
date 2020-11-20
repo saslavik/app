@@ -65,6 +65,11 @@ export default {
           (product) => product.categoryId === this.filterCategoryId,
         );
       }
+      if (this.filterCategoryId) {
+        filteredProducts = filteredProducts.filter(
+          (product) => product.categoryId === this.filterCategoryId,
+        );
+      }
       return filteredProducts;
     },
     products() {

@@ -12,7 +12,8 @@
       <product-filter
       :priceFrom.sync="filterPriceFrom"
       :priceTo.sync="filterPriceTo"
-      :category.sync="filterCategoryId"/>
+      :category.sync="filterCategoryId"
+      :color.sync="filterColorId"/>
       <section class="catalog">
         <product-list :products="products"/>
         <base-pagination
@@ -45,6 +46,7 @@ export default {
       filterPriceFrom: 0,
       filterPriceTo: 0,
       filterCategoryId: 0,
+      filterColorId: 0,
     };
   },
   computed: {
@@ -65,9 +67,9 @@ export default {
           (product) => product.categoryId === this.filterCategoryId,
         );
       }
-      if (this.filterCategoryId) {
+      if (this.filterColorId) {
         filteredProducts = filteredProducts.filter(
-          (product) => product.categoryId === this.filterCategoryId,
+          (product) => product.colorId === this.filterColorId,
         );
       }
       return filteredProducts;

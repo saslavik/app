@@ -6,7 +6,7 @@ export default [
   },
   {
     id: 2,
-    title: 'Orange',
+    title: 'Yellow',
     color: '#FFBE15',
   },
   {

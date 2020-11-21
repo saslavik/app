@@ -157,7 +157,7 @@
 
 <script>
 import categories from '../data/categories';
-import colors from '../data/color';
+import colors from '../data/colors';
 
 export default {
   data() {

@@ -67,7 +67,7 @@ export default {
       }
       if (this.filterColorId) {
         filteredProducts = filteredProducts.filter(
-          (product) => product.colorId === this.filterColorId,
+          (product) => product.colorId.includes(this.filterColorId),
         );
       }
       return filteredProducts;

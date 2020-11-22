@@ -15,7 +15,6 @@ export default {
   props: ['products'],
   data() {
     return {
-      color: '#73B6EA',
     };
   },
 };

@@ -2,7 +2,7 @@ export default [
   {
     id: 1,
     categoryId: 4,
-    colorId: 2,
+    colorId: [2, 4],
     title: 'LEGO Classic 484 детали',
     price: 563,
     image: 'img/lego.jpg',
@@ -10,7 +10,7 @@ export default [
   {
     id: 2,
     categoryId: 4,
-    colorId: 1,
+    colorId: [1],
     title: 'Машинка-трансформер Screechers',
     price: 209,
     image: 'img/car.jpg',
@@ -18,7 +18,7 @@ export default [
   {
     id: 3,
     categoryId: 2,
-    colorId: 2,
+    colorId: [2],
     title: 'Apple iPhone 11',
     price: 15690,
     image: 'img/phone.jpg',
@@ -26,7 +26,7 @@ export default [
   {
     id: 4,
     categoryId: 3,
-    colorId: 3,
+    colorId: [3],
     title: 'LG F2V3GS6W',
     price: 8490,
     image: 'img/board.jpg',
@@ -34,7 +34,7 @@ export default [
   {
     id: 5,
     categoryId: 2,
-    colorId: 7,
+    colorId: [3, 7],
     title: 'Смартфон Xiaomi Mi A3 4/64GB Android One',
     price: 13690,
     image: 'img/phone-2.jpg',
@@ -42,7 +42,7 @@ export default [
   {
     id: 6,
     categoryId: 2,
-    colorId: 5,
+    colorId: [5],
     title: 'Смартфон Xiaomi Redmi 6/128GB',
     price: 11690,
     image: 'img/phone-3.jpg',
@@ -50,7 +50,7 @@ export default [
   {
     id: 7,
     categoryId: 3,
-    colorId: 4,
+    colorId: [4],
     title: 'Электрический дрифт-карт Razor Crazy Cart',
     price: 15690,
     image: 'img/bicycle.jpg',
@@ -58,7 +58,7 @@ export default [
   {
     id: 8,
     categoryId: 3,
-    colorId: 3,
+    colorId: [3],
     title: 'Гироскутер Razor Hovertrax 2.0',
     price: 6690,
     image: 'img/wheels.jpg',
@@ -66,7 +66,7 @@ export default [
   {
     id: 9,
     categoryId: 3,
-    colorId: 7,
+    colorId: [7],
     title: 'Детский трюковой самокат Razor Grom',
     price: 7690,
     image: 'img/scooter.jpg',
@@ -74,7 +74,7 @@ export default [
   {
     id: 10,
     categoryId: 3,
-    colorId: 7,
+    colorId: [4, 7],
     title: 'Роллерсёрф Razor RipStik Air Pro',
     price: 36190,
     image: 'img/ripstik.jpg',
@@ -82,7 +82,7 @@ export default [
   {
     id: 11,
     categoryId: 5,
-    colorId: 6,
+    colorId: [6],
     title: 'Наушники AirPods с беспроводным зарядным футляром',
     price: 12690,
     image: 'img/airpods.jpg',
@@ -90,7 +90,7 @@ export default [
   {
     id: 12,
     categoryId: 5,
-    colorId: 7,
+    colorId: [4, 7],
     title: 'Наушники Sony',
     price: 30690,
     image: 'img/headphones.jpg',

@@ -1,5 +1,5 @@
 <template>
-  <ul class="colors" >
+  <ul class="colors" :class="{'colors--black': itemColors}">
     <li class="colors__item" v-for="color in colors" :key="color.id">
       <label class="colors__label">
         <input
@@ -23,15 +23,20 @@
 import colors from '../data/colors';
 
 export default {
-  props: ['currentColor'],
+  props: ['currentColor', 'itemColors'],
   data() {
     return {
       baseColor: 0,
+      arrColors: this.itemColors || [],
     };
   },
   computed: {
     colors() {
-      return colors;
+      let filteredColors = colors;
+      if (this.arrColors.length > 0) {
+        filteredColors = filteredColors.filter((color) => this.arrColors.includes(color.id));
+      }
+      return filteredColors;
     },
   },
   watch: {

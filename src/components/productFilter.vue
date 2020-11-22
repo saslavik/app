@@ -36,7 +36,7 @@
       </fieldset>
       <fieldset class="form__block">
         <legend class="form__legend">Цвет</legend>
-        <baseColors :currentColor.sync='currentColor'/>
+        <baseColors :currentColor.sync='currentColor' />
       </fieldset>
       <fieldset class="form__block">
         <legend class="form__legend">Объемб в ГБ</legend>

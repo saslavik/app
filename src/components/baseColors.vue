@@ -1,6 +1,6 @@
 <template>
-  <ul class="colors" :class="{'colors--black': itemColors}">
-    <li class="colors__item" v-for="color in colors" :key="color.id">
+  <ul class="colors">
+    <li class="colors__item" v-for="color in filteredColors" :key="color.id">
       <label class="colors__label">
         <input
           class="colors__radio sr-only"
@@ -22,28 +22,25 @@
 import colors from '../data/colors';
 
 export default {
-  props: ['currentColor', 'itemColors'],
-  data() {
-    return {
-      baseColor: this.currentColor || 0,
-      arrColors: this.itemColors || [],
-    };
-  },
+  props: ['currentColor', 'colorsId'],
   computed: {
     colors() {
-      let filteredColors = colors;
-      if (this.arrColors.length > 0) {
-        filteredColors = filteredColors.filter((color) => this.arrColors.includes(color.id));
+      return colors;
+    },
+    baseColor: {
+      get() {
+        return this.currentColor;
+      },
+      set(value) {
+        this.$emit('update:currentColor', value);
+      },
+    },
+    filteredColors() {
+      let filteredColors = this.colors;
+      if (this.colors.length !== this.colorsId.length) {
+        filteredColors = filteredColors.filter((color) => this.colorsId.includes(color.id));
       }
       return filteredColors;
-    },
-  },
-  watch: {
-    baseColor() {
-      this.$emit('update:currentColor', this.baseColor);
-    },
-    currentColor() {
-      this.baseColor = this.currentColor;
     },
   },
 };

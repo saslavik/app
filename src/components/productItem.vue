@@ -13,7 +13,9 @@
       <span class="catalog__price">
         {{ product.price }} ₽
       </span>
-      <base-colors :itemColors='product.colorId' />
+      <base-colors :itemColors='product.colorId'
+      :currentColor.sync='currentColor'
+      v-model="currentColor"/>
       <!-- v-model="color" -->
     </li>
 
@@ -26,7 +28,7 @@ export default {
   components: { baseColors },
   data() {
     return {
-      color: '',
+      currentColor: 4,
     };
   },
   props: ['product'],

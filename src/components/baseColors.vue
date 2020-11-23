@@ -5,7 +5,6 @@
         <input
           class="colors__radio sr-only"
           type="radio"
-          name="color"
           :value="color.id"
           v-model="baseColor"
         />
@@ -26,7 +25,7 @@ export default {
   props: ['currentColor', 'itemColors'],
   data() {
     return {
-      baseColor: 0,
+      baseColor: this.currentColor || 0,
       arrColors: this.itemColors || [],
     };
   },
@@ -42,6 +41,9 @@ export default {
   watch: {
     baseColor() {
       this.$emit('update:currentColor', this.baseColor);
+    },
+    currentColor() {
+      this.baseColor = this.currentColor;
     },
   },
 };

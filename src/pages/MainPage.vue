@@ -11,8 +11,7 @@
     <div class="content__catalog">
       <product-filter v-bind.sync="filter"/>
       <section class="catalog">
-        <product-list :products="products"
-        @goToPage="(pageName, pageParams) => $emit('goToPage', pageName, pageParams)" />
+        <product-list :products="products" />
         <base-pagination
         v-model='page'
         :productPerPage='productPerPage'

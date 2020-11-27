@@ -36,24 +36,7 @@
       </fieldset>
       <fieldset class="form__block">
         <legend class="form__legend">Цвет</legend>
-        <ul class="colors" >
-          <li class="colors__item" v-for="color in colors" :key="color.id">
-            <label class="colors__label">
-              <input
-                class="colors__radio sr-only"
-                type="radio"
-                name="color"
-                :value="color.id"
-                v-model="currentColor"
-              />
-              <span
-                class="colors__value"
-                :style="{backgroundColor: color.color}"
-              >
-              </span>
-            </label>
-          </li>
-        </ul>
+      <base-colors />
       </fieldset>
       <fieldset class="form__block">
         <legend class="form__legend">Объемб в ГБ</legend>
@@ -157,7 +140,7 @@
 
 <script>
 import categories from '../data/categories';
-import colors from '../data/colors';
+import baseColors from './baseColors.vue';
 
 export default {
   data() {
@@ -168,13 +151,13 @@ export default {
       currentColor: 0,
     };
   },
+  components: {
+    baseColors,
+  },
   props: ['priceFrom', 'priceTo', 'category', 'color'],
   computed: {
     categories() {
       return categories;
-    },
-    colors() {
-      return colors;
     },
   },
   watch: {

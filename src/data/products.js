@@ -10,7 +10,7 @@ export default [
   {
     id: 2,
     categoryId: 4,
-    colorId: [1],
+    colorId: [1, 3, 4],
     title: 'Машинка-трансформер Screechers',
     price: 209,
     image: 'img/car.jpg',

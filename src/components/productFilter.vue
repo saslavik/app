@@ -36,7 +36,7 @@
       </fieldset>
       <fieldset class="form__block">
         <legend class="form__legend">Цвет</legend>
-      <base-colors />
+        <baseColors :colorsId='colors' :currentColor.sync='currentColor' />
       </fieldset>
       <fieldset class="form__block">
         <legend class="form__legend">Объемб в ГБ</legend>
@@ -141,8 +141,12 @@
 <script>
 import categories from '../data/categories';
 import baseColors from './baseColors.vue';
+import colors from '../data/colors';
 
 export default {
+  components: {
+    baseColors,
+  },
   data() {
     return {
       currentPriceFrom: 0,
@@ -156,6 +160,9 @@ export default {
   },
   props: ['priceFrom', 'priceTo', 'category', 'color'],
   computed: {
+    colors() {
+      return colors;
+    },
     categories() {
       return categories;
     },
@@ -169,9 +176,6 @@ export default {
     },
     category(value) {
       this.currentCategory = value;
-    },
-    color(value) {
-      this.currentColor = value;
     },
   },
   methods: {

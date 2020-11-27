@@ -3,18 +3,18 @@
     <div class="content__top">
       <ul class="breadcrumbs">
         <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link" href="index.html">
+          <a class="breadcrumbs__link" href="#" @click.prevent="goToPage('main')" >
             Каталог
           </a>
         </li>
         <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link" href="#">
-            Мобильный транспорт
+          <a class="breadcrumbs__link" href="#" @click.prevent="goToPage('main')" >
+            {{ category.title }}
           </a>
         </li>
         <li class="breadcrumbs__item">
           <a class="breadcrumbs__link">
-            Смартфон Xiaomi Mi Mix 3 6/128GB
+            {{ product.title }}
           </a>
         </li>
       </ul>
@@ -23,67 +23,63 @@
     <section class="item">
       <div class="item__pics pics">
         <div class="pics__wrapper">
-          <img width="570" height="570" src="img/phone-square.jpg" srcset="img/phone-square@2x.jpg 2x" alt="Название товара">
+          <img width="570" height="570"
+          :src="product.image"
+          srcset="img/phone-square@2x.jpg 2x"
+          alt="Название товара">
         </div>
         <ul class="pics__list">
           <li class="pics__item">
             <a href="" class="pics__link pics__link--current">
-              <img width="98" height="98" src="img/phone-square-1.jpg" srcset="img/phone-square-1@2x.jpg 2x" alt="Название товара">
+              <img width="98" height="98"
+              :src="product.image"
+              srcset="img/phone-square-1@2x.jpg 2x"
+              alt="Название товара">
             </a>
           </li>
           <li class="pics__item">
             <a href="" class="pics__link">
-              <img width="98" height="98" src="img/phone-square-2.jpg" srcset="img/phone-square-2@2x.jpg 2x" alt="Название товара">
+              <img width="98" height="98"
+              src="img/phone-square-2.jpg"
+              srcset="img/phone-square-2@2x.jpg 2x"
+              alt="Название товара">
             </a>
           </li>
           <li class="pics__item">
             <a href="" class="pics__link">
-              <img width="98" height="98" src="img/phone-square-3.jpg" srcset="img/phone-square-3@2x.jpg 2x" alt="Название товара">
+              <img width="98" height="98"
+              src="img/phone-square-3.jpg"
+              srcset="img/phone-square-3@2x.jpg 2x"
+              alt="Название товара">
             </a>
           </li>
           <li class="pics__item">
             <a class="pics__link" href="#">
-              <img width="98" height="98" src="img/phone-square-4.jpg" srcset="img/phone-square-4@2x.jpg 2x" alt="Название товара">
+              <img width="98" height="98"
+              src="img/phone-square-4.jpg"
+              srcset="img/phone-square-4@2x.jpg 2x"
+              alt="Название товара">
             </a>
           </li>
         </ul>
       </div>
 
       <div class="item__info">
-        <span class="item__code">Артикул: 150030</span>
+        <span class="item__code">Артикул: {{ product.id }}</span>
         <h2 class="item__title">
-          Смартфон Xiaomi Mi Mix 3 6/128GB
+          {{ product.title }}
         </h2>
         <div class="item__form">
           <form class="form" action="#" method="POST">
             <b class="item__price">
-              18 990 ₽
+              {{ product.price | numberFormat }} ₽
             </b>
 
             <fieldset class="form__block">
               <legend class="form__legend">Цвет:</legend>
-              <ul class="colors">
-                <li class="colors__item">
-                  <label class="colors__label">
-                    <input class="colors__radio sr-only" type="radio" name="color-item" value="blue" checked="">
-                    <span class="colors__value" style="background-color: #73B6EA;">
-                    </span>
-                  </label>
-                </li>
-                <li class="colors__item">
-                  <label class="colors__label">
-                    <input class="colors__radio sr-only" type="radio" name="color-item" value="yellow">
-                    <span class="colors__value" style="background-color: #FFBE15;">
-                    </span>
-                  </label>
-                </li>
-                <li class="colors__item">
-                  <label class="colors__label">
-                    <input class="colors__radio sr-only" type="radio" name="color-item" value="gray">
-                    <span class="colors__value" style="background-color: #939393;">
-                  </span></label>
-                </li>
-              </ul>
+              <base-colors :colorsId='product.colorId'
+              :currentColor.sync='currentProductColor'
+              v-model="currentProductColor" />
             </fieldset>
 
             <fieldset class="form__block">
@@ -92,7 +88,8 @@
               <ul class="sizes sizes--primery">
                 <li class="sizes__item">
                   <label class="sizes__label">
-                    <input class="sizes__radio sr-only" type="radio" name="sizes-item" value="32">
+                    <input class="sizes__radio sr-only"
+                    type="radio" name="sizes-item" value="32">
                     <span class="sizes__value">
                       32gb
                     </span>
@@ -100,7 +97,8 @@
                 </li>
                 <li class="sizes__item">
                   <label class="sizes__label">
-                    <input class="sizes__radio sr-only" type="radio" name="sizes-item" value="64">
+                    <input class="sizes__radio sr-only"
+                    type="radio" name="sizes-item" value="64">
                     <span class="sizes__value">
                       64gb
                     </span>
@@ -108,7 +106,8 @@
                 </li>
                 <li class="sizes__item">
                   <label class="sizes__label">
-                    <input class="sizes__radio sr-only" type="radio" name="sizes-item" value="128" checked="">
+                    <input class="sizes__radio sr-only"
+                    type="radio" name="sizes-item" value="128" checked="">
                     <span class="sizes__value">
                       128gb
                     </span>
@@ -181,13 +180,32 @@
           <h3>Что это?</h3>
 
           <p>
-            Wahoo ELEMNT BOLT GPS – это велокомпьютер, который позволяет оптимизировать свои велотренировки, сделав их максимально эффективными. Wahoo ELEMNT BOLT GPS синхронизируется с датчиками по ANT+, объединяя полученную с них информацию. Данные отображаются на дисплее, а также сохраняются на смартфоне. При этом на мобильное устройство можно установить как фирменное приложение, так и различные приложения сторонних разработчиков. Велокомпьютер точно отслеживает местоположение, принимая сигнал с целого комплекса спутников. Эта информация позволяет смотреть уже преодоленные маршруты и планировать новые велопрогулки.
+            Wahoo ELEMNT BOLT GPS – это велокомпьютер, который позволяет
+            оптимизировать свои велотренировки, сделав их максимально
+            эффективными. Wahoo ELEMNT BOLT GPS синхронизируется с
+            датчиками по ANT+, объединяя полученную с них информацию.
+            Данные отображаются на дисплее, а также сохраняются на смартфоне.
+            При этом на мобильное устройство можно установить как фирменное
+            приложение, так и различные приложения сторонних разработчиков.
+            Велокомпьютер точно отслеживает местоположение, принимая сигнал
+            с целого комплекса спутников. Эта информация позволяет смотреть
+            уже преодоленные маршруты и планировать новые велопрогулки.
           </p>
 
           <h3>Дизайн</h3>
 
           <p>
-            Велокомпьютер Wahoo ELEMNT BOLT очень компактный. Размеры устройства составляют всего 74,6 x 47,3 x 22,1 мм. что не превышает габариты смартфона. Корпус гаджета выполнен из черного пластика. На обращенной к пользователю стороне расположен дисплей диагональю 56 мм. На дисплей выводятся координаты и скорость, а также полученная со смартфона и синхронизированных датчиков информация: интенсивность, скорость вращения педалей, пульс и т.д. (датчики не входят в комплект поставки). Корпус велокомпьютера имеет степень защиты от влаги IPX7. Это означает, что устройство не боится пыли, а также выдерживает кратковременное (до 30 минут) погружение в воду на глубину не более 1 метра.
+            Велокомпьютер Wahoo ELEMNT BOLT очень компактный. Размеры
+            устройства составляют всего 74,6 x 47,3 x 22,1 мм. что не
+            превышает габариты смартфона. Корпус гаджета выполнен из
+            черного пластика. На обращенной к пользователю стороне расположен
+            дисплей диагональю 56 мм. На дисплей выводятся координаты и
+            скорость, а также полученная со смартфона и синхронизированных
+            датчиков информация: интенсивность, скорость вращения педалей,
+            пульс и т.д. (датчики не входят в комплект поставки). Корпус
+            велокомпьютера имеет степень защиты от влаги IPX7. Это означает,
+            что устройство не боится пыли, а также выдерживает кратковременное
+            (до 30 минут) погружение в воду на глубину не более 1 метра.
           </p>
         </div>
       </div>
@@ -196,7 +214,33 @@
 </template>
 
 <script>
-export default {
+import products from '@/data/products';
+import categories from '@/data/categories';
+import goToPage from '@/helpers/goToPage';
+import numberFormat from '@/helpers/numberFormat';
+import baseColors from '@/components/baseColors.vue';
 
-}
+export default {
+  props: ['pageParams'],
+  components: { baseColors },
+  filters: {
+    numberFormat,
+  },
+  data() {
+    return {
+      currentProductColor: this.product.colorId[0],
+    };
+  },
+  computed: {
+    product() {
+      return products.find((product) => product.id === this.pageParams.id);
+    },
+    category() {
+      return categories.find((category) => category.id === this.product.categoryId);
+    },
+  },
+  methods: {
+    goToPage,
+  },
+};
 </script>

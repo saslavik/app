@@ -26,6 +26,7 @@
 import baseColors from '@/components/baseColors.vue';
 import goToPage from '@/helpers/goToPage';
 import numberFormat from '@/helpers/numberFormat';
+
 export default {
   components: { baseColors },
   filters: {

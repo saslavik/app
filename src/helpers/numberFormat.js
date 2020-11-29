@@ -1,3 +1,3 @@
 export default function numberFormat(value) {
-  return new Intl.NumberFormat().format(value);
+  return typeof (value) === 'number' ? new Intl.NumberFormat().format(value) : value;
 }

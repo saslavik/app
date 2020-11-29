@@ -155,9 +155,6 @@ export default {
       currentColor: 0,
     };
   },
-  components: {
-    baseColors,
-  },
   props: ['priceFrom', 'priceTo', 'category', 'color'],
   computed: {
     colors() {

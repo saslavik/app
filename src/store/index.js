@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import products from '@/data/products';
 
 Vue.use(Vuex);
 
@@ -20,6 +21,14 @@ export default new Vuex.Store({
           amount,
         });
       }
+    },
+  },
+  getters: {
+    cartDetailProduct(state) {
+      return state.cartProducts.map((item) => ({
+        ...item,
+        product: products.find((el) => el.id === item.productId),
+      }));
     },
   },
 });

@@ -70,7 +70,7 @@
           {{ product.title }}
         </h2>
         <div class="item__form">
-          <form class="form" action="#" method="POST">
+          <form class="form" action="#" method="POST" @submit.prevent="addToCart">
             <b class="item__price">
               {{ product.price | numberFormat }} ₽
             </b>
@@ -118,15 +118,15 @@
 
             <div class="item__row">
               <div class="form__counter">
-                <button type="button" aria-label="Убрать один товар">
+                <button type="button" aria-label="Убрать один товар" @click="productAmount--">
                   <svg width="12" height="12" fill="currentColor">
                     <use xlink:href="#icon-minus"></use>
                   </svg>
                 </button>
 
-                <input type="text" value="1" name="count">
+                <input type="text" v-model.number="productAmount">
 
-                <button type="button" aria-label="Добавить один товар">
+                <button type="button" aria-label="Добавить один товар" @click="productAmount++">
                   <svg width="12" height="12" fill="currentColor">
                     <use xlink:href="#icon-plus"></use>
                   </svg>
@@ -216,19 +216,18 @@
 <script>
 import products from '@/data/products';
 import categories from '@/data/categories';
-import goToPage from '@/helpers/goToPage';
 import numberFormat from '@/helpers/numberFormat';
 import baseColors from '@/components/baseColors.vue';
 
 export default {
+  data() {
+    return {
+      productAmount: 1,
+    };
+  },
   components: { baseColors },
   filters: {
     numberFormat,
-  },
-  data() {
-    return {
-      currentProductColor: this.product.colorId[0],
-    };
   },
   computed: {
     product() {
@@ -239,7 +238,12 @@ export default {
     },
   },
   methods: {
-    goToPage,
+    addToCart() {
+      this.$store.commit(
+        'addProductToCart',
+        { productId: this.product.id, amount: this.productAmount },
+      );
+    },
   },
 };
 </script>

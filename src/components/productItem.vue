@@ -23,7 +23,6 @@
 
 <script>
 import baseColors from '@/components/baseColors.vue';
-import goToPage from '@/helpers/goToPage';
 import numberFormat from '@/helpers/numberFormat';
 
 export default {
@@ -35,9 +34,6 @@ export default {
     return {
       currentProductColor: this.product.colorId[0],
     };
-  },
-  methods: {
-    goToPage,
   },
   props: ['product'],
 };

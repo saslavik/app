@@ -22,13 +22,27 @@ export default new Vuex.Store({
         });
       }
     },
+    updateCartProductAmount(state, { productId, amount }) {
+      const item = state.cartProducts.find((el) => el.productId === productId);
+      if (item) {
+        item.amount = amount;
+      }
+    },
+    deleteCartProduct(state, productId) {
+      state.cartProducts = state.cartProducts.filter((item) => item.productId !== productId);
+    },
   },
   getters: {
-    cartDetailProduct(state) {
+    cartDetailProducts(state) {
       return state.cartProducts.map((item) => ({
         ...item,
         product: products.find((el) => el.id === item.productId),
       }));
+    },
+    cartTotalPrice(state, getters) {
+      return getters.cartDetailProducts.reduce(
+        (acc, item) => acc + (item.product.price * item.amount), 0,
+      );
     },
   },
 });

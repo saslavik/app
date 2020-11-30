@@ -26,6 +26,7 @@ import products from '@/data/products';
 import productList from '@/components/productList.vue';
 import basePagination from '@/components/basePagination.vue';
 import productFilter from '@/components/productFilter.vue';
+import axios from 'axios';
 
 export default {
   components: {
@@ -39,13 +40,14 @@ export default {
   data() {
     return {
       page: 1,
-      productPerPage: 3,
+      productPerPage: 6,
       filter: {
         priceFrom: 0,
         priceTo: 0,
         category: 0,
         color: 0,
       },
+      productsData: null,
     };
   },
   computed: {
@@ -74,12 +76,30 @@ export default {
       return filteredProducts;
     },
     products() {
-      const offset = (this.page - 1) * this.productPerPage;
-      return this.filteredProducts.slice(offset, offset + this.productPerPage);
+      return this.productsData ? this.productsData.items.map((product) => ({
+        ...product,
+        image: product.image.file.url,
+      })) : [];
     },
     countProducts() {
-      return this.filteredProducts.length;
+      return this.productsData ? this.productsData.pagination.total : 0;
     },
+  },
+  methods: {
+    loadProducts() {
+      axios.get(`https://vue-study.skillbox.ru/api/products?page=${this.page}&limit=${this.productPerPage}`)
+        .then((response) => {
+          this.productsData = response.data;
+        });
+    },
+  },
+  watch: {
+    page() {
+      this.loadProducts();
+    },
+  },
+  created() {
+    this.loadProducts();
   },
 };
 </script>

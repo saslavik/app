@@ -32,7 +32,7 @@ export default {
   },
   data() {
     return {
-      currentProductColor: this.product.colorId[0],
+      currentProductColor: this.product.colors[0],
     };
   },
   props: ['product'],

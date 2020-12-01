@@ -19,19 +19,7 @@
     </span>
 
     <div class="product__counter form__counter">
-      <button type="button" aria-label="Убрать один товар" @click.prevent="amount--">
-        <svg width="10" height="10" fill="currentColor">
-          <use xlink:href="#icon-minus"></use>
-        </svg>
-      </button>
-
-      <input type="text" v-model.number="amount">
-
-      <button type="button" aria-label="Добавить один товар" @click.prevent="amount++">
-        <svg width="10" height="10" fill="currentColor">
-          <use xlink:href="#icon-plus"></use>
-        </svg>
-      </button>
+      <product-amount :class="{product__counter: true}" :amount.sync="itemAmount" />
     </div>
 
     <b class="product__price">
@@ -50,16 +38,23 @@
 <script>
 import numberFormat from '@/helpers/numberFormat';
 import { mapMutations } from 'vuex';
+import productAmount from './productAmount.vue';
 
 export default {
+  components: { productAmount },
   filters: {
     numberFormat,
+  },
+  data() {
+    return {
+      itemAmount: this.item.amount,
+    };
   },
   props: ['item'],
   computed: {
     amount: {
       get() {
-        return this.item.amount;
+        return this.itemAmount;
       },
       set(value) {
         this.$store.commit('updateCartProductAmount', { productId: this.item.productId, amount: value });
@@ -68,6 +63,11 @@ export default {
   },
   methods: {
     ...mapMutations({ deleteProduct: 'deleteCartProduct' }),
+  },
+  watch: {
+    itemAmount() {
+      this.amount = this.itemAmount;
+    },
   },
 };
 </script>

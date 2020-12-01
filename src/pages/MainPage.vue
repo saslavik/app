@@ -9,7 +9,9 @@
       </span>
     </div>
     <div class="content__catalog">
-      <product-filter v-bind.sync="filter"/>
+      <product-filter :price-from.sync="filterPriceFrom"
+      :price-to.sync="filterPriceTo"
+      :category.sync="filterCategory"/>
       <section class="catalog">
         <product-list :products="products" />
         <base-pagination
@@ -22,7 +24,6 @@
 </template>
 
 <script>
-import products from '@/data/products';
 import productList from '@/components/productList.vue';
 import basePagination from '@/components/basePagination.vue';
 import productFilter from '@/components/productFilter.vue';
@@ -34,47 +35,18 @@ export default {
     basePagination,
     productFilter,
   },
-  props: {
-
-  },
   data() {
     return {
       page: 1,
       productPerPage: 6,
-      filter: {
-        priceFrom: 0,
-        priceTo: 0,
-        category: 0,
-        color: 0,
-      },
+      filterPriceFrom: 0,
+      filterPriceTo: 0,
+      filterCategory: 0,
+      color: 0,
       productsData: null,
     };
   },
   computed: {
-    filteredProducts() {
-      let filteredProducts = products;
-      if (this.filter.priceFrom > 0) {
-        filteredProducts = filteredProducts.filter(
-          (product) => product.price >= this.filter.priceFrom,
-        );
-      }
-      if (this.filter.priceTo > 0) {
-        filteredProducts = filteredProducts.filter(
-          (product) => product.price <= this.filter.priceTo,
-        );
-      }
-      if (this.filter.category) {
-        filteredProducts = filteredProducts.filter(
-          (product) => product.categoryId === this.filter.category,
-        );
-      }
-      if (this.filter.color) {
-        filteredProducts = filteredProducts.filter(
-          (product) => product.colorId.includes(this.filter.color),
-        );
-      }
-      return filteredProducts;
-    },
     products() {
       return this.productsData ? this.productsData.items.map((product) => ({
         ...product,
@@ -87,7 +59,15 @@ export default {
   },
   methods: {
     loadProducts() {
-      axios.get(`https://vue-study.skillbox.ru/api/products?page=${this.page}&limit=${this.productPerPage}`)
+      axios.get('https://vue-study.skillbox.ru/api/products', {
+        params: {
+          page: this.page,
+          limit: this.productPerPage,
+          categoryId: this.filterCategory,
+          minPrice: this.filterPriceFrom,
+          maxPrice: this.filterPriceTo,
+        },
+      })
         .then((response) => {
           this.productsData = response.data;
         });
@@ -95,6 +75,9 @@ export default {
   },
   watch: {
     page() {
+      this.loadProducts();
+    },
+    filterPriceFrom() {
       this.loadProducts();
     },
   },

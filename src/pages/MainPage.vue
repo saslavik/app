@@ -80,6 +80,12 @@ export default {
     filterPriceFrom() {
       this.loadProducts();
     },
+    filterPriceTo() {
+      this.loadProducts();
+    },
+    filterCategory() {
+      this.loadProducts();
+    },
   },
   created() {
     this.loadProducts();

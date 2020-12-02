@@ -13,7 +13,7 @@
       <span class="catalog__price">
         {{ product.price | numberFormat }} ₽
       </span>
-      <base-colors :colorsId='product.colorId'
+      <base-colors :colorsId='product.colors'
       :currentColor.sync='currentProductColor'
       v-model="currentProductColor"
       class="colors--black"/>

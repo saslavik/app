@@ -1,6 +1,6 @@
 <template>
   <div class="form__counter">
-    <button type="button" aria-label="Убрать один товар" @click.prevent="reduceAmount()">
+    <button type="button" aria-label="Убрать один товар" @click.prevent="itemAmount--">
       <svg width="10" height="10" fill="currentColor">
         <use xlink:href="#icon-minus"></use>
       </svg>
@@ -29,12 +29,6 @@ export default {
           this.$emit('update:amount', value);
         }
       },
-    },
-  },
-  methods: {
-    reduceAmount() {
-      if (this.itemAmount > 0) this.itemAmount -= 1;
-      else this.itemAmount = 0;
     },
   },
 };

@@ -36,7 +36,7 @@
       </fieldset>
       <fieldset class="form__block">
         <legend class="form__legend">Цвет</legend>
-        <baseColors :colorsId='colors' :currentColor.sync='currentColor' />
+        <baseColors :colors='colors' :currentColor.sync='currentColor' />
       </fieldset>
       <fieldset class="form__block">
         <legend class="form__legend">Объемб в ГБ</legend>
@@ -140,8 +140,8 @@
 
 <script>
 import axios from 'axios';
+import { API_BASE_URL } from '@/config';
 import baseColors from './baseColors.vue';
-import colors from '../data/colors';
 
 export default {
   components: {
@@ -155,12 +155,13 @@ export default {
       currentColor: 0,
 
       categoriesData: null,
+      colorsData: null,
     };
   },
   props: ['priceFrom', 'priceTo', 'category', 'color'],
   computed: {
     colors() {
-      return colors;
+      return this.colorsData ? this.colorsData.items : [];
     },
     categories() {
       return this.categoriesData ? this.categoriesData.items : [];
@@ -191,15 +192,23 @@ export default {
       this.$emit('update:color', 0);
     },
     loadCategories() {
-      axios.get('https://vue-study.skillbox.ru/api/productCategories')
+      axios.get(`${API_BASE_URL}/api/productCategories`)
         .then((response) => {
           this.categoriesData = response.data;
           return this.categoriesData;
         });
     },
+    loadColors() {
+      axios.get(`${API_BASE_URL}/api/colors`)
+        .then((response) => {
+          this.colorsData = response.data;
+          return this.colorsData;
+        });
+    },
   },
   created() {
     this.loadCategories();
+    this.loadColors();
   },
 };
 </script>

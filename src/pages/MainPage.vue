@@ -11,8 +11,13 @@
     <div class="content__catalog">
       <product-filter :price-from.sync="filterPriceFrom"
       :price-to.sync="filterPriceTo"
-      :category.sync="filterCategory"/>
+      :category.sync="filterCategory"
+      :color.sync="filterColor"/>
       <section class="catalog">
+        <div v-if="productsLoading">Загрузка товаров.........</div>
+        <div v-if="productsLoadingFailed">Ошибка загрузки товаров......... :(
+          <button @click.prevent="loadProducts">Попробовать еще раз</button>
+        </div>
         <product-list :products="products" />
         <base-pagination
         v-model='page'
@@ -24,6 +29,7 @@
 </template>
 
 <script>
+import { API_BASE_URL } from '@/config';
 import productList from '@/components/productList.vue';
 import basePagination from '@/components/basePagination.vue';
 import productFilter from '@/components/productFilter.vue';
@@ -42,8 +48,10 @@ export default {
       filterPriceFrom: 0,
       filterPriceTo: 0,
       filterCategory: 0,
-      color: 0,
+      filterColor: 0,
       productsData: null,
+      productsLoading: false,
+      productsLoadingFailed: false,
     };
   },
   computed: {
@@ -59,18 +67,30 @@ export default {
   },
   methods: {
     loadProducts() {
-      axios.get('https://vue-study.skillbox.ru/api/products', {
-        params: {
-          page: this.page,
-          limit: this.productPerPage,
-          categoryId: this.filterCategory,
-          minPrice: this.filterPriceFrom,
-          maxPrice: this.filterPriceTo,
-        },
-      })
-        .then((response) => {
-          this.productsData = response.data;
-        });
+      this.productsLoading = true;
+      this.productsLoadingFailed = false;
+      clearTimeout(this.loadProductsTimer);
+      this.loadProductsTimer = setTimeout(() => {
+        axios.get(`${API_BASE_URL}/api/products`, {
+          params: {
+            page: this.page,
+            limit: this.productPerPage,
+            categoryId: this.filterCategory,
+            minPrice: this.filterPriceFrom,
+            maxPrice: this.filterPriceTo,
+            colorId: this.filterColor,
+          },
+        })
+          .then((response) => {
+            this.productsData = response.data;
+          })
+          .catch(() => {
+            this.productsLoadingFailed = true;
+          })
+          .then(() => {
+            this.productsLoading = false;
+          });
+      }, 0);
     },
   },
   watch: {
@@ -84,6 +104,9 @@ export default {
       this.loadProducts();
     },
     filterCategory() {
+      this.loadProducts();
+    },
+    filterColor() {
       this.loadProducts();
     },
   },

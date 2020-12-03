@@ -200,6 +200,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import products from '@/data/products';
 import categories from '@/data/categories';
 import numberFormat from '@/helpers/numberFormat';
@@ -210,6 +211,7 @@ export default {
   data() {
     return {
       productAmount: 1,
+      productData: null,
     };
   },
   components: { baseColors, ProductAmount },
@@ -231,6 +233,12 @@ export default {
         { productId: this.product.id, amount: this.productAmount },
       );
     },
+    loadProduct() {
+      axios.get();
+    },
+  },
+  created() {
+    this.loadProduct();
   },
 };
 </script>

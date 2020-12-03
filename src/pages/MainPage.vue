@@ -14,7 +14,7 @@
       :category.sync="filterCategory"
       :color.sync="filterColor"/>
       <section class="catalog">
-        <div v-if="productsLoading">Загрузка товаров.........</div>
+        <loaderAnimation v-if="productsLoading"></loaderAnimation>
         <div v-if="productsLoadingFailed">Ошибка загрузки товаров......... :(
           <button @click.prevent="loadProducts">Попробовать еще раз</button>
         </div>
@@ -30,6 +30,7 @@
 
 <script>
 import { API_BASE_URL } from '@/config';
+import loaderAnimation from '@/components/loaderAnimation.vue';
 import productList from '@/components/productList.vue';
 import basePagination from '@/components/basePagination.vue';
 import productFilter from '@/components/productFilter.vue';
@@ -40,6 +41,7 @@ export default {
     productList,
     basePagination,
     productFilter,
+    loaderAnimation,
   },
   data() {
     return {
@@ -90,7 +92,7 @@ export default {
           .then(() => {
             this.productsLoading = false;
           });
-      }, 0);
+      }, 3000);
     },
   },
   watch: {

@@ -1,5 +1,6 @@
 <template>
-  <main class="content container">
+  <loaderAnimation v-if="productsLoading"></loaderAnimation>
+  <main v-else class="content container">
     <div class="content__top">
       <ul class="breadcrumbs">
         <li class="breadcrumbs__item">
@@ -203,6 +204,7 @@ import axios from 'axios';
 import { API_BASE_URL } from '@/config';
 import numberFormat from '@/helpers/numberFormat';
 import baseColors from '@/components/baseColors.vue';
+import loaderAnimation from '@/components/loaderAnimation.vue';
 import productAmount from '../components/productAmount.vue';
 
 export default {
@@ -214,7 +216,7 @@ export default {
       productsLoadingFailed: false,
     };
   },
-  components: { baseColors, productAmount },
+  components: { baseColors, productAmount, loaderAnimation },
   filters: {
     numberFormat,
   },
@@ -250,7 +252,7 @@ export default {
           .then(() => {
             this.productsLoading = false;
           });
-      }, 0);
+      }, 3000);
     },
   },
   created() {

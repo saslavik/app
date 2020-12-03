@@ -9,7 +9,7 @@
         </li>
         <li class="breadcrumbs__item">
           <router-link class="breadcrumbs__link" :to="{name: 'main'}"  >
-            {{ category.title }}
+            {{ product.category.title }}
           </router-link>
         </li>
         <li class="breadcrumbs__item">
@@ -24,15 +24,14 @@
       <div class="item__pics pics">
         <div class="pics__wrapper">
           <img width="570" height="570"
-          :src="product.image"
-          srcset="img/phone-square@2x.jpg 2x"
+          :src="product.image.file.url"
           alt="Название товара">
         </div>
         <ul class="pics__list">
           <li class="pics__item">
             <a href="" class="pics__link pics__link--current">
               <img width="98" height="98"
-              :src="product.image"
+              :src="product.image.file.url"
               srcset="img/phone-square-1@2x.jpg 2x"
               alt="Название товара">
             </a>
@@ -77,7 +76,7 @@
 
             <fieldset class="form__block">
               <legend class="form__legend">Цвет:</legend>
-              <base-colors :colorsId='product.colorId'
+              <base-colors :colors='product.colors'
               :currentColor.sync='currentProductColor'
               v-model="currentProductColor" />
             </fieldset>
@@ -201,29 +200,33 @@
 
 <script>
 import axios from 'axios';
-import products from '@/data/products';
-import categories from '@/data/categories';
+import { API_BASE_URL } from '@/config';
 import numberFormat from '@/helpers/numberFormat';
 import baseColors from '@/components/baseColors.vue';
-import ProductAmount from '../components/productAmount.vue';
+import productAmount from '../components/productAmount.vue';
 
 export default {
   data() {
     return {
       productAmount: 1,
       productData: null,
+      productsLoading: false,
+      productsLoadingFailed: false,
     };
   },
-  components: { baseColors, ProductAmount },
+  components: { baseColors, productAmount },
   filters: {
     numberFormat,
   },
   computed: {
     product() {
-      return products.find((product) => product.id === +this.$route.params.id);
+      return this.productData;
     },
     category() {
-      return categories.find((category) => category.id === this.product.categoryId);
+      return this.product.category.id;
+    },
+    route() {
+      return this.$route.params.id;
     },
   },
   methods: {
@@ -234,11 +237,29 @@ export default {
       );
     },
     loadProduct() {
-      axios.get();
+      this.productsLoading = true;
+      this.productsLoadingFailed = false;
+      this.loadProductTimer = setTimeout(() => {
+        axios.get(`${API_BASE_URL}/api/products/${this.$route.params.id}`)
+          .then((response) => {
+            this.productData = response.data;
+          })
+          .catch(() => {
+            this.productsLoadingFailed = true;
+          })
+          .then(() => {
+            this.productsLoading = false;
+          });
+      }, 0);
     },
   },
   created() {
     this.loadProduct();
+  },
+  watch: {
+    route() {
+      this.loadProduct();
+    },
   },
 };
 </script>

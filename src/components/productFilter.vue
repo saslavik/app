@@ -195,14 +195,12 @@ export default {
       axios.get(`${API_BASE_URL}/api/productCategories`)
         .then((response) => {
           this.categoriesData = response.data;
-          return this.categoriesData;
         });
     },
     loadColors() {
       axios.get(`${API_BASE_URL}/api/colors`)
         .then((response) => {
           this.colorsData = response.data;
-          return this.colorsData;
         });
     },
   },

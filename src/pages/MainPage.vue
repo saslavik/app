@@ -14,11 +14,11 @@
       :category.sync="filterCategory"
       :color.sync="filterColor"/>
       <section class="catalog">
-        <loaderAnimation v-if="productsLoading"></loaderAnimation>
         <div v-if="productsLoadingFailed">Ошибка загрузки товаров......... :(
           <button @click.prevent="loadProducts">Попробовать еще раз</button>
         </div>
-        <product-list :products="products" />
+        <loaderAnimation v-if="productsLoading"></loaderAnimation>
+        <product-list v-else :products="products" />
         <base-pagination
         v-model='page'
         :productPerPage='productPerPage'
@@ -92,7 +92,7 @@ export default {
           .then(() => {
             this.productsLoading = false;
           });
-      }, 3000);
+      }, 0);
     },
   },
   watch: {

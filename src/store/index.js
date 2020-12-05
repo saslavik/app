@@ -89,6 +89,7 @@ export default new Vuex.Store({
       if (amount < 1) {
         return '';
       }
+
       return axios.put(`${API_BASE_URL}/api/baskets/products`, {
         productId,
         quantity: amount,
@@ -108,8 +109,9 @@ export default new Vuex.Store({
       context.commit('deleteCartProduct', productId);
 
       return axios.delete(`${API_BASE_URL}/api/baskets/products`, {
-        productId,
-      }, {
+        data: {
+          productId,
+        },
         params: {
           userAccessKey: context.state.userAccessKey,
         },

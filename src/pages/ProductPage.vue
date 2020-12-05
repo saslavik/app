@@ -252,7 +252,7 @@ export default {
           .then(() => {
             this.productsLoading = false;
           });
-      }, 3000);
+      }, 0);
     },
   },
   created() {

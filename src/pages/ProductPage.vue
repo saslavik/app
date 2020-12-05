@@ -119,10 +119,12 @@
             <div class="item__row">
               <product-amount :amount.sync="productAmount" />
 
-              <button class="button button--primery" type="submit">
+              <button class="button button--primery" type="submit" :disabled="productsAddSending">
                 В корзину
               </button>
             </div>
+            <div v-show="productsAddSending">Добавляем в корзину</div>
+            <div v-show="productsAdded">Товар успешно добавлен в корзину</div>
           </form>
         </div>
       </div>
@@ -201,6 +203,7 @@
 
 <script>
 import axios from 'axios';
+import { mapActions } from 'vuex';
 import { API_BASE_URL } from '@/config';
 import numberFormat from '@/helpers/numberFormat';
 import baseColors from '@/components/baseColors.vue';
@@ -214,6 +217,8 @@ export default {
       productData: null,
       productsLoading: false,
       productsLoadingFailed: false,
+      productsAdded: false,
+      productsAddSending: false,
     };
   },
   components: { baseColors, productAmount, loaderAnimation },
@@ -232,12 +237,18 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['addProductToCart']),
+
     addToCart() {
-      this.$store.commit(
-        'addProductToCart',
-        { productId: this.product.id, amount: this.productAmount },
-      );
+      this.productsAdded = false;
+      this.productsAddSending = true;
+      this.addProductToCart({ productId: this.product.id, amount: this.productAmount })
+        .then(() => {
+          this.productsAdded = true;
+          this.productsAddSending = false;
+        });
     },
+
     loadProduct() {
       this.productsLoading = true;
       this.productsLoadingFailed = false;

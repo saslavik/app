@@ -12,17 +12,6 @@ export default new Vuex.Store({
     cartProductsData: [],
   },
   mutations: {
-    addProductToCart(state, { productId, amount }) {
-      const item = state.cartProducts.find((el) => el.productId === productId);
-      if (item) {
-        item.amount += amount;
-      } else {
-        state.cartProducts.push({
-          productId,
-          amount,
-        });
-      }
-    },
     updateCartProductAmount(state, { productId, amount }) {
       const item = state.cartProducts.find((el) => el.productId === productId);
       if (item) {
@@ -67,7 +56,7 @@ export default new Vuex.Store({
   },
   actions: {
     loadCart(context) {
-      axios.get(`${API_BASE_URL}/api/baskets/`, {
+      return axios.get(`${API_BASE_URL}/api/baskets/`, {
         params: {
           userAccessKey: context.state.userAccessKey,
         },
@@ -78,6 +67,40 @@ export default new Vuex.Store({
             context.commit('updateUserAccessKey', response.data.user.accessKey);
           }
           context.commit('updateCartProductsData', response.data.items);
+          context.commit('syncCartProducts');
+        });
+    },
+    addProductToCart(context, { productId, amount }) {
+      return axios.post(`${API_BASE_URL}/api/baskets/products`, {
+        productId,
+        quantity: amount,
+      }, {
+        params: {
+          userAccessKey: context.state.userAccessKey,
+        },
+      })
+        .then((response) => {
+          context.commit('updateCartProductsData', response.data.items);
+          context.commit('syncCartProducts');
+        });
+    },
+    updateCartProductAmount(context, { productId, amount }) {
+      context.commit('updateCartProductAmount', { productId, amount });
+      if (amount < 1) {
+        return '';
+      }
+      return axios.put(`${API_BASE_URL}/api/baskets/products`, {
+        productId,
+        quantity: amount,
+      }, {
+        params: {
+          userAccessKey: context.state.userAccessKey,
+        },
+      })
+        .then((response) => {
+          context.commit('updateCartProductsData', response.data.items);
+        })
+        .catch(() => {
           context.commit('syncCartProducts');
         });
     },

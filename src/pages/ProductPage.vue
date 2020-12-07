@@ -1,5 +1,6 @@
 <template>
   <loaderAnimation v-if="productsLoading"></loaderAnimation>
+  <h2 v-else-if="productsLoadingFailed">Данный товар не найден</h2>
   <main v-else class="content container">
     <div class="content__top">
       <ul class="breadcrumbs">
@@ -219,6 +220,7 @@ export default {
       productsLoadingFailed: false,
       productsAdded: false,
       productsAddSending: false,
+      currentProductColor: 0,
     };
   },
   components: { baseColors, productAmount, loaderAnimation },
@@ -256,6 +258,7 @@ export default {
         axios.get(`${API_BASE_URL}/api/products/${this.$route.params.id}`)
           .then((response) => {
             this.productData = response.data;
+            this.currentProductColor = response.data.colors[0].id;
           })
           .catch(() => {
             this.productsLoadingFailed = true;
@@ -266,12 +269,12 @@ export default {
       }, 0);
     },
   },
-  created() {
-    this.loadProduct();
-  },
   watch: {
-    route() {
-      this.loadProduct();
+    route: {
+      handler() {
+        this.loadProduct();
+      },
+      immediate: true,
     },
   },
 };

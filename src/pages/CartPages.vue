@@ -18,7 +18,7 @@
         Корзина
       </h1>
       <span class="content__info">
-        {{ $store.state.cartProducts.length }} {{ productsQty }}
+        {{ $store.state.cartProducts.length }} <cart-product-qty />
       </span>
     </div>
 
@@ -48,9 +48,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import numberFormat from '@/helpers/numberFormat';
 import CartItem from '@/components/CartItem.vue';
-import { mapGetters } from 'vuex';
+import CartProductQty from '../components/CartProductQty.vue';
 
 export default {
   filters: {
@@ -58,21 +59,10 @@ export default {
   },
   components: {
     CartItem,
+    CartProductQty,
   },
   computed: {
     ...mapGetters({ products: 'cartDetailProducts', totalPrice: 'cartTotalPrice' }),
-    productsQty() {
-      const qty = this.$store.state.cartProducts.length;
-      let qtyText = '';
-      if (qty === 1) {
-        qtyText = 'товар';
-      } else if (qty < 5) {
-        qtyText = 'товара';
-      } else {
-        qtyText = 'товаров';
-      }
-      return qtyText;
-    },
   },
 };
 </script>

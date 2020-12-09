@@ -106,10 +106,8 @@ export default {
         this.loadProducts();
       },
       deep: true,
+      immediate: true,
     },
-  },
-  created() {
-    this.loadProducts();
   },
 };
 </script>

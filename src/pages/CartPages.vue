@@ -3,9 +3,9 @@
     <div class="content__top">
       <ul class="breadcrumbs">
         <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link" href="index.html">
+          <router-link :to="{name: 'main'}" class="breadcrumbs__link">
             Каталог
-          </a>
+          </router-link>
         </li>
         <li class="breadcrumbs__item">
           <a class="breadcrumbs__link">
@@ -18,7 +18,7 @@
         Корзина
       </h1>
       <span class="content__info">
-        {{ $store.state.cartProducts.length }} {{ productsQty }}
+        {{ $store.state.cartProducts.length }} <cart-product-qty />
       </span>
     </div>
 
@@ -38,8 +38,8 @@
             Итого: <span>{{ totalPrice | numberFormat }} ₽</span>
           </p>
 
-          <router-link tag="button" :to="{name: 'order'}"
-          class="cart__button button button--primery">
+          <router-link v-if="products.length > 0" tag="button" :to="{name: 'order'}"
+          class="cart__button button button--primery" type="submit">
             Оформить заказ
           </router-link>
         </div>
@@ -49,31 +49,9 @@
 </template>
 
 <script>
-import numberFormat from '@/helpers/numberFormat';
-import CartItem from '@/components/CartItem.vue';
-import { mapGetters } from 'vuex';
+import productCartList from '@/mixins/productCartList';
 
 export default {
-  filters: {
-    numberFormat,
-  },
-  components: {
-    CartItem,
-  },
-  computed: {
-    ...mapGetters({ products: 'cartDetailProducts', totalPrice: 'cartTotalPrice' }),
-    productsQty() {
-      const qty = this.$store.state.cartProducts.length;
-      let qtyText = '';
-      if (qty === 1) {
-        qtyText = 'товар';
-      } else if (qty < 5) {
-        qtyText = 'товара';
-      } else {
-        qtyText = 'товаров';
-      }
-      return qtyText;
-    },
-  },
+  mixins: [productCartList],
 };
 </script>

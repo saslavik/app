@@ -19,13 +19,13 @@
         </li>
       </ul>
 
-      <h1 class="content__title">
+      <h1 class="content__title" v-if="orderInfo">
         Заказ оформлен <span>№ {{ orderInfo.id }}</span>
       </h1>
     </div>
 
     <section class="cart">
-      <form class="cart__form form" action="#" method="POST">
+      <form v-if="orderInfo" class="cart__form form" action="#" method="POST">
         <div class="cart__field">
           <p class="cart__message">
             Благодарим за выбор нашего магазина. На Вашу почту придет письмо с деталями заказа.

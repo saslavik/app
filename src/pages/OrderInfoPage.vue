@@ -33,44 +33,12 @@
           </p>
 
           <ul class="dictionary">
-            <li class="dictionary__item">
+            <li class="dictionary__item" v-for="(item, index) in dictionary" :key="index">
               <span class="dictionary__key">
-                Получатель
+                {{ item.title }}
               </span>
               <span class="dictionary__value">
-                {{ orderInfo.name }}
-              </span>
-            </li>
-            <li class="dictionary__item">
-              <span class="dictionary__key">
-                Адрес доставки
-              </span>
-              <span class="dictionary__value">
-                {{ orderInfo.address }}
-              </span>
-            </li>
-            <li class="dictionary__item">
-              <span class="dictionary__key">
-                Телефон
-              </span>
-              <span class="dictionary__value">
-                {{ orderInfo.phone }}
-              </span>
-            </li>
-            <li class="dictionary__item">
-              <span class="dictionary__key">
-                Email
-              </span>
-              <span class="dictionary__value">
-                {{ orderInfo.email }}
-              </span>
-            </li>
-            <li class="dictionary__item">
-              <span class="dictionary__key">
-                Способ оплаты
-              </span>
-              <span class="dictionary__value">
-                картой при получении
+                {{ item.key }}
               </span>
             </li>
           </ul>
@@ -106,15 +74,37 @@ export default {
     numberFormat,
   },
   components: { CartProductQty },
-  created() {
-    if (this.$store.state.orderInfo && this.$store.state.orderInfo.id === this.$route.params.id) {
-      return;
-    }
-
-    this.$store.dispatch('loadOrderInfo', this.$route.params.id);
+  methods: {
+    getInfo() {
+      if (this.$store.state.orderInfo && this.$store.state.orderInfo.id === this.$route.params.id) {
+        return;
+      }
+      this.$store.dispatch('loadOrderInfo', this.$route.params.id);
+      // if (this.orderInfo.id !== this.$route.params.id) this.$router.push({ name: 'notFound' });
+    },
   },
   computed: {
+    route() {
+      return this.$route.params.id;
+    },
     ...mapGetters({ orderInfo: 'orderInfo' }),
+    dictionary() {
+      return [
+        { title: 'Получатель', key: this.orderInfo.name },
+        { title: 'Адрес доставки', key: this.orderInfo.address },
+        { title: 'Телефон', key: this.orderInfo.phone },
+        { title: 'Email', key: this.orderInfo.email },
+        { title: 'Способ оплаты', key: 'картой при получении' },
+      ];
+    },
+  },
+  watch: {
+    route: {
+      handler() {
+        this.getInfo();
+      },
+      immediate: true,
+    },
   },
 };
 </script>

@@ -80,12 +80,17 @@ export default {
         return;
       }
       this.$store.dispatch('loadOrderInfo', this.$route.params.id);
-      // if (this.orderInfo.id !== this.$route.params.id) this.$router.push({ name: 'notFound' });
+    },
+    getError() {
+      this.$router.push({ name: 'notFound' });
     },
   },
   computed: {
     route() {
       return this.$route.params.id;
+    },
+    error() {
+      return this.$store.state.orderInfoError;
     },
     ...mapGetters({ orderInfo: 'orderInfo' }),
     dictionary() {
@@ -104,6 +109,11 @@ export default {
         this.getInfo();
       },
       immediate: true,
+    },
+    error: {
+      handler() {
+        this.getError();
+      },
     },
   },
 };

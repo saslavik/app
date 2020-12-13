@@ -79,18 +79,15 @@ export default {
       if (this.$store.state.orderInfo && this.$store.state.orderInfo.id === this.$route.params.id) {
         return;
       }
-      this.$store.dispatch('loadOrderInfo', this.$route.params.id);
-    },
-    getError() {
-      this.$router.push({ name: 'notFound' });
+      this.$store.dispatch('loadOrderInfo', this.$route.params.id)
+        .catch(() => {
+          this.$router.push('/404');
+        });
     },
   },
   computed: {
     route() {
       return this.$route.params.id;
-    },
-    error() {
-      return this.$store.state.orderInfoError;
     },
     ...mapGetters({ orderInfo: 'orderInfo' }),
     dictionary() {
@@ -109,11 +106,6 @@ export default {
         this.getInfo();
       },
       immediate: true,
-    },
-    error: {
-      handler() {
-        this.getError();
-      },
     },
   },
 };

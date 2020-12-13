@@ -11,14 +11,10 @@ export default new Vuex.Store({
     userAccessKey: null,
     cartProductsData: [],
     orderInfo: null,
-    orderInfoError: null,
   },
   mutations: {
     updateOrderInfo(state, orderInfo) {
       state.orderInfo = orderInfo;
-    },
-    updateOrderInfoError(state, error) {
-      state.orderInfoError = error;
     },
     resetCart(state) {
       state.cartProducts = [];
@@ -72,7 +68,6 @@ export default new Vuex.Store({
   actions: {
     loadOrderInfo(context, orderId) {
       context.commit('updateOrderInfo', null);
-      context.commit('updateOrderInfoError', null);
       return axios.get(`${API_BASE_URL}/api/orders/${orderId}`, {
         params: {
           userAccessKey: context.state.userAccessKey,
@@ -80,9 +75,6 @@ export default new Vuex.Store({
       })
         .then((response) => {
           context.commit('updateOrderInfo', response.data);
-        })
-        .catch((e) => {
-          context.commit('updateOrderInfoError', e.message);
         });
     },
     loadCart(context) {

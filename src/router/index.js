@@ -14,7 +14,7 @@ const routes = [{ name: 'main', component: MainPage, path: '/' },
   { name: 'cart', component: CartPages, path: '/cart' },
   { name: 'order', component: OrderPage, path: '/order' },
   { name: 'orderInfo', component: OrderInfoPage, path: '/order/:id' },
-  { name: 'notFound', component: NotFoundPage, path: '*' }];
+  { name: 'notFound', component: NotFoundPage, path: '/404' }, { path: '*', redirect: '/404' }];
 
 const router = new VueRouter({
   routes,
